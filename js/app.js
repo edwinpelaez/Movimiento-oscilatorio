@@ -160,6 +160,8 @@ class NotebookApp {
         window.scrollTo({ top: 0, behavior: 'smooth' });
         const scrollBody = page.querySelector('.page-scroll-body');
         if (scrollBody) scrollBody.scrollTop = 0;
+        const leafScrolls = page.querySelectorAll('.leaf-scroll-body');
+        leafScrolls.forEach(s => s.scrollTop = 0);
       } else {
         page.classList.remove('active');
       }

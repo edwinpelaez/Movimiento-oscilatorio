@@ -201,7 +201,7 @@ body {
   max-height: 100%;
   background: #0d1e34;
   border-radius: clamp(14px, 1.8vw, 18px);
-  padding: 8px 8px 8px 24px; /* Margen para argollas Wire-O */
+  padding: 8px; /* Simétrico en todas las páginas abiertas */
   position: relative;
   box-shadow: 0 25px 60px -15px rgba(0, 0, 0, 0.65), 0 10px 25px -10px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -216,24 +216,10 @@ body {
 }
 
 /* -------------------------------------------------------------
-   Argollas Metálicas Wire-O (Efecto Cuaderno Argollado Real)
+   Argollas Metálicas Wire-O Exteriores
+   (En el diseño de cuaderno abierto el anillado está en el centro)
    ------------------------------------------------------------- */
 .notebook-rings {
-  position: absolute;
-  left: 3px;
-  top: 14px;
-  bottom: 14px;
-  width: 36px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-  z-index: 50;
-  pointer-events: none;
-}
-
-/* En la portada ocultamos las argollas CSS para lucir las argollas nativas del arte */
-.notebook-binder.is-cover .notebook-rings {
   display: none !important;
 }
 
@@ -288,13 +274,9 @@ body {
   height: 100%;
   flex: 1;
   min-height: 0;
-  background-color: var(--paper-bg);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  background-position: center;
+  background: transparent;
   border-radius: clamp(8px, 1.2vw, 12px);
   position: relative;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.22);
   overflow: hidden; /* Mantiene el contenido encuadrado sin romper el cuaderno */
   transform-style: preserve-3d;
   backface-visibility: hidden;
@@ -827,39 +809,168 @@ body {
   }
 }
 
-/* Páginas de Contenido en Papel Cuadriculado con Estilo Editorial */
-.page-content-template {
-  background-color: #fcfcfd;
-  background-image: 
-    linear-gradient(rgba(186, 215, 245, 0.35) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(186, 215, 245, 0.35) 1px, transparent 1px);
-  background-size: 18px 18px;
-  padding: clamp(16px, 2.4vh, 26px) clamp(18px, 2.5vw, 32px) clamp(16px, 2.2vh, 24px) clamp(46px, 5.8vw, 70px);
+/* =============================================================
+   LAYOUT MAESTRO: CUADERNO ABIERTO (DOBLE HOJA BLANCA SIMÉTRICA)
+   Páginas 2 a 10: Hoja Izquierda + Anillas Wire-O Centrales + Hoja Derecha
+   ============================================================= */
+.notebook-open-layout {
+  width: 100%;
   height: 100%;
+  display: grid;
+  grid-template-columns: 1fr 38px 1fr;
+  background: transparent;
   position: relative;
+  overflow: hidden;
+  border-radius: clamp(8px, 1.2vw, 12px);
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.45);
 }
 
-.page-content-template::after {
-  content: '\f02e';
-  font-family: 'Font Awesome 6 Free';
-  font-weight: 900;
+/* Hojas de Papel Blanco de Cuaderno */
+.notebook-page-leaf {
+  position: relative;
+  background-color: #ffffff;
+  /* Textura de papel con cuadrícula sutil y rayado editorial de libreta */
+  background-image: 
+    linear-gradient(rgba(186, 215, 245, 0.35) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(186, 215, 245, 0.18) 1px, transparent 1px);
+  background-size: 100% 22px, 22px 22px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+  overflow: hidden;
+  color: #1e293b;
+}
+
+/* Hoja Izquierda: Borde exterior redondeado y sombra interior de encuadernación */
+.notebook-page-leaf.leaf-left {
+  border-radius: clamp(8px, 1.2vw, 12px) 0 0 clamp(8px, 1.2vw, 12px);
+  box-shadow: inset -12px 0 24px rgba(0, 0, 0, 0.06), inset 0 0 1px rgba(0, 0, 0, 0.08);
+  border-right: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Hoja Derecha: Borde exterior redondeado y sombra interior de encuadernación */
+.notebook-page-leaf.leaf-right {
+  border-radius: 0 clamp(8px, 1.2vw, 12px) clamp(8px, 1.2vw, 12px) 0;
+  box-shadow: inset 12px 0 24px rgba(0, 0, 0, 0.06), inset 0 0 1px rgba(0, 0, 0, 0.08);
+  border-left: 1px solid rgba(148, 163, 184, 0.2);
+}
+
+/* Línea roja vertical de margen de libreta escolar/universitaria */
+.notebook-page-leaf.leaf-left::after {
+  content: '';
   position: absolute;
   top: 0;
-  right: 28px;
-  width: 26px;
-  height: 38px;
-  background: #2563eb;
-  border-radius: 0 0 3px 3px;
-  box-shadow: 0 4px 10px rgba(37, 99, 235, 0.35);
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-  padding-bottom: 5px;
-  color: #ffffff;
-  font-size: 0.75rem;
-  clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 80%, 0 100%);
+  bottom: 0;
+  left: 28px;
+  width: 1.5px;
+  background: rgba(239, 68, 68, 0.25);
   pointer-events: none;
-  z-index: 25;
+  z-index: 2;
+}
+
+.notebook-page-leaf.leaf-right::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 28px;
+  width: 1.5px;
+  background: rgba(239, 68, 68, 0.25);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Encabezado elegante de cada hoja */
+.leaf-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 6px;
+  border-bottom: 1.5px solid rgba(2, 132, 199, 0.18);
+  background: rgba(248, 250, 252, 0.92);
+  backdrop-filter: blur(6px);
+  z-index: 10;
+  flex-shrink: 0;
+}
+
+.leaf-header-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: #0f2b48;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.leaf-header-title i {
+  color: #0284c7;
+}
+
+.leaf-header-badge {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #0284c7;
+  background: rgba(2, 132, 199, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  border: 1px solid rgba(2, 132, 199, 0.2);
+}
+
+/* Área de contenido con scroll suave */
+.leaf-scroll-body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 14px 18px 22px 34px; /* Espacio para el margen vertical rojo */
+  scrollbar-width: thin;
+  scrollbar-color: #2563eb rgba(219, 234, 254, 0.45);
+}
+
+.leaf-scroll-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.leaf-scroll-body::-webkit-scrollbar-track {
+  background: rgba(224, 238, 255, 0.4);
+  border-radius: 4px;
+}
+
+.leaf-scroll-body::-webkit-scrollbar-thumb {
+  background: #2563eb;
+  border-radius: 4px;
+}
+
+.leaf-scroll-body::-webkit-scrollbar-thumb:hover {
+  background: #1d4ed8;
+}
+
+/* Adaptación responsive para pantallas estrechas */
+@media (max-width: 860px) {
+  .notebook-open-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    overflow-y: auto;
+  }
+  .notebook-open-layout .notebook-center-spine {
+    display: none !important;
+  }
+  .notebook-page-leaf.leaf-left,
+  .notebook-page-leaf.leaf-right {
+    border-radius: 8px;
+    border: none;
+    box-shadow: none;
+    min-height: 380px;
+  }
+}
+
+/* Páginas de Contenido en Papel Cuadriculado con Estilo Editorial */
+.page-content-template {
+  background: transparent;
+  padding: 0;
+  height: 100%;
+  position: relative;
 }
 
 .editorial-pink-line {
