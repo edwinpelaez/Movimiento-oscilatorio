@@ -34,6 +34,7 @@
     </div>
     <div class="topbar-actions">
       <span class="topbar-page-badge" id="topbar-page-badge">Pág. 1 / 10</span>
+      <button class="btn-topbar" id="nav-btn-sound" title="Sonido al pasar página"><i class="fas fa-volume-up"></i></button>
       <button class="btn-topbar" id="nav-btn-toc"><i class="fas fa-list-ul"></i> Índice</button>
       <button class="btn-topbar" id="nav-btn-fullscreen"><i class="fas fa-expand"></i></button>
     </div>
@@ -41,6 +42,11 @@
 
   <!-- Escenario del Cuaderno Virtual -->
   <main class="notebook-stage">
+    <!-- Flecha flotante izquierda para pasar página atrás -->
+    <button class="stage-nav-arrow prev" id="stage-arrow-prev" title="Página Anterior (Flecha Izquierda)" aria-label="Página anterior">
+      <i class="fas fa-chevron-left"></i>
+    </button>
+
     <div class="notebook-binder">
       
       <!-- Argollas Metálicas Wire-O en el Lateral Izquierdo -->
@@ -2298,6 +2304,10 @@
       </section>
 
     </div>
+    <!-- Flecha flotante derecha para pasar página adelante -->
+    <button class="stage-nav-arrow next" id="stage-arrow-next" title="Página Siguiente (Flecha Derecha)" aria-label="Página siguiente">
+      <i class="fas fa-chevron-right"></i>
+    </button>
   </main>
 
   <!-- ==============================================================
